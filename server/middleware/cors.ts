@@ -1,6 +1,6 @@
 const ORIGINS = [
-  "https://divasilevski.github.io",
-  "https://master--melodious-marigold-1931f5.netlify.app",
+  "divasilevski.github.io",
+  "master--melodious-marigold-1931f5.netlify.app",
 ];
 
 /**
@@ -12,10 +12,10 @@ export default defineEventHandler((event) => {
   ORIGINS.forEach((origin) => {
     if (host?.startsWith(origin)) {
       setResponseHeaders(event, {
-        "Access-Control-Allow-Origin": origin,
+        "Access-Control-Allow-Origin": "https://" + origin,
         "Access-Control-Allow-Methods": "*",
         "Access-Control-Allow-Credentials": "true",
-        "Access-Control-Allow-Headers": origin,
+        "Access-Control-Allow-Headers": "https://" + origin,
         "Access-Control-Expose-Headers": "*",
       });
     }
