@@ -1,30 +1,23 @@
+const ORIGINS = [
+  "https://divasilevski.github.io",
+  "https://master--melodious-marigold-1931f5.netlify.app",
+];
+
 /**
  * Middleware to respond CORS preflight requests using OPTIONS method.
  */
 export default defineEventHandler((event) => {
-  const host = event.node.req.headers.host;
-
-  if (host?.includes("divasilevski.github.io")) {
-    setResponseHeaders(event, {
-      "Access-Control-Allow-Origin": "https://divasilevski.github.io",
-      "Access-Control-Allow-Methods": "*",
-      "Access-Control-Allow-Credentials": "true",
-      "Access-Control-Allow-Headers": "https://divasilevski.github.io",
-      "Access-Control-Expose-Headers": "*",
-    });
-  }
-
-  if (host?.includes("master--melodious-marigold")) {
-    setResponseHeaders(event, {
-      "Access-Control-Allow-Origin":
-        "https://master--melodious-marigold-1931f5.netlify.app",
-      "Access-Control-Allow-Methods": "*",
-      "Access-Control-Allow-Credentials": "true",
-      "Access-Control-Allow-Headers":
-        "https://master--melodious-marigold-1931f5.netlify.app",
-      "Access-Control-Expose-Headers": "*",
-    });
-  }
+  ORIGINS.forEach((origin) => {
+    if (event.node.req.headers.origin?.includes(origin)) {
+      setResponseHeaders(event, {
+        "Access-Control-Allow-Origin": origin,
+        "Access-Control-Allow-Methods": "*",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Headers": origin,
+        "Access-Control-Expose-Headers": "*",
+      });
+    }
+  });
 
   // Answers HTTP 204 OK to CORS preflight requests using OPTIONS method :
   // if (event.method === 'OPTIONS' && isPreflightRequest(event)) {
