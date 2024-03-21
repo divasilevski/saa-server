@@ -5,6 +5,8 @@ export default defineEventHandler(async (event) => {
     maxAge: 3600000,
     secure: true,
     sameSite: "none",
+    path: "/",
+    domain: "https://saa-server.vercel.app",
   });
 
   return {
