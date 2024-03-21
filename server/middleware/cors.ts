@@ -9,17 +9,25 @@ const ORIGINS = [
 export default defineEventHandler((event) => {
   const host = event.node.req.headers.host;
 
-  ORIGINS.forEach((origin) => {
-    if (host?.startsWith(origin)) {
-      setResponseHeaders(event, {
-        "Access-Control-Allow-Origin": "https://" + origin,
-        "Access-Control-Allow-Methods": "*",
-        "Access-Control-Allow-Credentials": "true",
-        "Access-Control-Allow-Headers": "https://" + origin,
-        "Access-Control-Expose-Headers": "*",
-      });
-    }
+  setResponseHeaders(event, {
+    "Access-Control-Allow-Origin": "https://divasilevski.github.io",
+    "Access-Control-Allow-Methods": "*",
+    "Access-Control-Allow-Credentials": "true",
+    "Access-Control-Allow-Headers": "https://divasilevski.github.io",
+    "Access-Control-Expose-Headers": "*",
   });
+
+  // ORIGINS.forEach((origin) => {
+  //   if (host?.startsWith(origin)) {
+  //     setResponseHeaders(event, {
+  //       "Access-Control-Allow-Origin": "https://" + origin,
+  //       "Access-Control-Allow-Methods": "*",
+  //       "Access-Control-Allow-Credentials": "true",
+  //       "Access-Control-Allow-Headers": "https://" + origin,
+  //       "Access-Control-Expose-Headers": "*",
+  //     });
+  //   }
+  // });
 
   // Answers HTTP 204 OK to CORS preflight requests using OPTIONS method :
   // if (event.method === 'OPTIONS' && isPreflightRequest(event)) {
