@@ -6,7 +6,6 @@ export default defineEventHandler(async (event) => {
     secure: true,
     sameSite: "none",
     path: "/",
-    domain: "https://saa-server.vercel.app",
   });
 
   return {
