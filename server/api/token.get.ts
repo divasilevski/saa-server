@@ -4,5 +4,6 @@ export default defineEventHandler((event) => {
 
   return {
     success: !!ssoToken,
+    token: "test-auth-token",
   };
 });
