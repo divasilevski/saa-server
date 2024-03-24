@@ -3,7 +3,7 @@ export default defineEventHandler((event) => {
   const ssoToken = cookies["sso-token"];
 
   return {
-    success: !!ssoToken,
+    success: ssoToken === "test-sso-token",
     token: "test-auth-token",
   };
 });
