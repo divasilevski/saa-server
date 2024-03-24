@@ -1,4 +1,5 @@
 const ORIGINS = [
+  "http://localhost:3000",
   "https://divasilevski.github.io",
   "https://master--melodious-marigold-1931f5.netlify.app",
 ];
