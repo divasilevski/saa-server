@@ -1,33 +1,39 @@
 <template>
-  <div>
-    <button id="btn">Send cookie</button>
-    <span>Cookie:</span><span>{{ data }}</span>
+  <div class="click-area" @click="onClick">
+    <!-- <button id="btn">Send cookie</button> -->
   </div>
 </template>
 
 <script lang="ts" setup>
-const data = ref()
-
 const message = (data: object) => {
   // window.parent.postMessage(document.cookie, "*");
   window.parent.postMessage(JSON.stringify(data), "*");
-}
+};
 
 function doThingsWithCookies (status: string) {
-  data.value = document.cookie;
-  message({ event: 'SAA', cookie: document.cookie, status })
+  message({ event: "SAAStatus", cookie: document.cookie, status });
 }
+
+const onClick = async () => {
+  try {
+    await document.requestStorageAccess();
+    doThingsWithCookies('granted');
+  } catch (err) {
+    doThingsWithCookies('denied');
+  }
+  message({ event: "SAAClick", success: true });
+};
 
 async function handleCookieAccess () {
   if (!document.hasStorageAccess) {
     // This browser doesn't support the Storage Access API
     // so let's just hope we have access!
-    doThingsWithCookies('not-supported');
+    doThingsWithCookies("not-supported");
   } else {
     const hasAccess = await document.hasStorageAccess();
     if (hasAccess) {
       // We have access to third-party cookies, so let's go
-      doThingsWithCookies('granted');
+      doThingsWithCookies("granted");
     } else {
       // Check whether third-party cookie access has been granted
       // to another same-site embed
@@ -40,27 +46,16 @@ async function handleCookieAccess () {
           // If so, you can just call requestStorageAccess() without a user interaction,
           // and it will resolve automatically.
           await document.requestStorageAccess();
-          doThingsWithCookies('granted');
+          doThingsWithCookies("granted");
         } else if (permission.state === "prompt") {
           doThingsWithCookies("prompt");
-          // Need to call requestStorageAccess() after a user interaction
-          // const $btn = document.querySelector('#btn')
-          // $btn.addEventListener("click", async () => {
-          //   try {
-          //     await document.requestStorageAccess();
-          //     doThingsWithCookies();
-          //   } catch (err) {
-          // If there is an error obtaining storage access.
-          //     console.error(`Error obtaining storage access: ${err}.
-          //                   Please sign in.`);
-          //   }
-          // });
+
         } else if (permission.state === "denied") {
-          doThingsWithCookies('denied')
+          doThingsWithCookies("denied");
         }
       } catch (error) {
         console.log(`Could not access permission state. Error: ${error}`);
-        doThingsWithCookies('denied'); // Again, we'll have to hope we have access!
+        doThingsWithCookies("denied"); // Again, we'll have to hope we have access!
       }
     }
   }
@@ -68,5 +63,17 @@ async function handleCookieAccess () {
 
 onMounted(() => {
   handleCookieAccess();
-})
+});
 </script>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.click-area {
+  width: 100vw;
+  height: 100vh;
+}
+</style>
