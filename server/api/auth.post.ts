@@ -1,8 +1,11 @@
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
 
+  const expires = new Date()
+  expires.setDate(expires.getDate() + 3);
+
   setCookie(event, "sso-token", "test-sso-token", {
-    maxAge: 3600000,
+    expires,
     secure: true,
     sameSite: "none",
     path: "/",
