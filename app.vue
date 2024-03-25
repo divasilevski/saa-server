@@ -1,10 +1,11 @@
 <template>
-  <div class="click-area" @click="onClick">
+  <div class="click-area">
     <!-- <button id="btn">Send cookie</button> -->
   </div>
 </template>
 
 <script lang="ts" setup>
+const $area  = document.querySelector('.click-area')
 const message = (data: object) => {
   // window.parent.postMessage(document.cookie, "*");
   window.parent.postMessage(JSON.stringify(data), "*");
@@ -14,9 +15,13 @@ function doThingsWithCookies (status: string) {
   message({ event: "SAAStatus", cookie: document.cookie, status });
 }
 
-const onClick = async () => {
+$area.onclick = async () => {
+  message({ event: "SAAClick", status: 'start' });
   await document.requestStorageAccess();
+  message({ event: "SAAClick", status: 'end' });
+}
 
+const onClick = async () => {
   message({ event: "SAAClick", status: 'start' });
   try {
     await document.requestStorageAccess();
