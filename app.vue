@@ -15,6 +15,8 @@ function doThingsWithCookies (status: string) {
 }
 
 const onClick = async () => {
+  await document.requestStorageAccess();
+
   message({ event: "SAAClick", status: 'start' });
   try {
     await document.requestStorageAccess();
