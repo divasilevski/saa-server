@@ -57,7 +57,8 @@ async function handleCookieAccess () {
         }
       } catch (error) {
         console.log(`Could not access permission state. Error: ${error}`);
-        doThingsWithCookies("denied"); // Again, we'll have to hope we have access!
+        // safari try fix?
+        doThingsWithCookies("prompt"); // Again, we'll have to hope we have access!
       }
     }
   }
