@@ -18,11 +18,12 @@ const onClick = async () => {
   message({ event: "SAAClick", status: 'start' });
   try {
     await document.requestStorageAccess();
+    message({ event: "SAAClick", status: 'end' });
     doThingsWithCookies('granted');
   } catch (err) {
+    message({ event: "SAAClick", status: 'end' });
     doThingsWithCookies('denied');
   }
-  message({ event: "SAAClick", status: 'end' });
 };
 
 async function handleCookieAccess () {
