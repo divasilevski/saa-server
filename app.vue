@@ -1,5 +1,5 @@
 <template>
-  <div class="click-area" @mouseenter="onClick">
+  <div class="click-area" @click="onClick">
     <!-- <button id="btn">Send cookie</button> -->
   </div>
 </template>
