@@ -5,31 +5,28 @@
 </template>
 
 <script lang="ts" setup>
-
 const message = (data: object) => {
   // window.parent.postMessage(document.cookie, "*");
   window.parent.postMessage(JSON.stringify(data), "*");
 };
 
-function doThingsWithCookies(status: string) {
+function doThingsWithCookies (status: string) {
   message({ event: "SAAStatus", cookie: document.cookie, status });
 }
 
+// const onClick = async () => {
+//   message({ event: "SAAClick", status: "start" });
+//   try {
+//     await document.requestStorageAccess();
+//     message({ event: "SAAClick", status: "end" });
+//     doThingsWithCookies("granted");
+//   } catch (err) {
+//     message({ event: "SAAClick", status: "end" });
+//     doThingsWithCookies("denied");
+//   }
+// };
 
-
-const onClick = async () => {
-  message({ event: "SAAClick", status: "start" });
-  try {
-    await document.requestStorageAccess();
-    message({ event: "SAAClick", status: "end" });
-    doThingsWithCookies("granted");
-  } catch (err) {
-    message({ event: "SAAClick", status: "end" });
-    doThingsWithCookies("denied");
-  }
-};
-
-async function handleCookieAccess() {
+async function handleCookieAccess () {
   if (!document.hasStorageAccess) {
     // This browser doesn't support the Storage Access API
     // so let's just hope we have access!
@@ -71,11 +68,11 @@ onMounted(() => {
 
   const $area = document.querySelector(".click-area");
   $area?.addEventListener("click", async () => {
-  message({ event: "SAAClick", status: "start" });
-  await document.requestStorageAccess();
-  doThingsWithCookies("granted");
-  message({ event: "SAAClick", status: "end" });
-});
+    message({ event: "SAAClick", status: "start" });
+    await document.requestStorageAccess();
+    doThingsWithCookies("granted");
+    message({ event: "SAAClick", status: "end" });
+  });
 });
 </script>
 

@@ -1,14 +1,14 @@
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
 
-  const expires = new Date()
+  const expires = new Date();
   expires.setDate(expires.getDate() + 3);
 
   setCookie(event, "sso-token", "test-sso-token", {
     expires,
     secure: true,
     sameSite: "none",
-    domain: 'saa-server.vercel.app',
+    // domain: 'saa-server.vercel.app',
     path: "/",
   });
 
